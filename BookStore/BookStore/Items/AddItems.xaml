@@ -1,0 +1,63 @@
+﻿<Window x:Class="BookStore.Items.AddItems"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookStore"
+        mc:Ignorable="d"
+        Title="AddItems" Height="900" Width="1200" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                <GradientStop Color="#FFEAF0FF"/>
+                <GradientStop Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <DockPanel  Margin="0,0,0,100">
+            <Grid DockPanel.Dock="Left" Height="250" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80*"/>
+                    <ColumnDefinition Width="20*"/>
+                </Grid.ColumnDefinitions>
+                
+                <DataGrid Name="itemDataGrid" 
+                          HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" SelectionChanged="itemDataGrid_SelectionChanged" Height="220" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn  Header="ID" Width="100" Binding="{Binding Path=ItemCode}" />
+                        <DataGridTextColumn Header="Book Name" Width="100" Binding="{Binding Path=Title}" />
+                        <DataGridTextColumn Header="Author Name" Width="100" Binding="{Binding Path=Author}" />
+                        <DataGridTextColumn Header="Price" Width="100" Binding="{Binding Path=Price}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel Margin="0" Grid.Column="1">
+                    <Button x:Name="btnAddNewItem" Content="Add Item" Margin="20" Click="btnAddNewItem_Click"/>
+                    <Button x:Name="btnEditItem" Content="Save Edits" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" VerticalAlignment="Top" Margin="20" Click="btnEditItem_Click"/>
+                    <Button x:Name="btnDeleteItem" Content="Delete Item" Margin="20" Click="btnDeleteItem_Click"/>
+                    <Button x:Name="btnClearSelection" Content="Clear" Margin="20" Click="btnClearSelection_Click" />
+
+
+                </StackPanel>
+                
+
+            </Grid>
+        </DockPanel>
+        <GroupBox x:Name="gbEditItem" Header="GroupBox" HorizontalAlignment="Left" Margin="10,260,10,0" VerticalAlignment="Top" Width="575" Height="100">
+            <Grid x:Name="editGrid" HorizontalAlignment="Left" Height="87" Margin="10,0,0,0" VerticalAlignment="Top" Width="550">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="269*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="lblItemCode" Content="Item Code"  Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="69"/>
+                <Label x:Name="lblBookName" Content="Book Name" Grid.Column="1" HorizontalAlignment="Left" Margin="84,10,0,0" VerticalAlignment="Top" Height="26" Width="82"/>
+                <Label x:Name="lblAuthor" Content="Author" Grid.Column="1" HorizontalAlignment="Left" Margin="296,10,0,0" VerticalAlignment="Top" Height="26" Width="80"/>
+                <Label x:Name="lblPrice" Content="Price" Grid.Column="1" HorizontalAlignment="Left" Margin="478,10,0,0" VerticalAlignment="Top" Height="26" Width="36" RenderTransformOrigin="2.556,0.423"/>
+                <TextBox x:Name="txtbxItemCode" HorizontalAlignment="Left" Height="28" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Grid.Column="1"/>
+                <TextBox x:Name="txtbxBookName" HorizontalAlignment="Left" Height="23" Margin="84,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Grid.Column="1"/>
+                <TextBox x:Name="txtbxAuthor" HorizontalAlignment="Left" Height="23" Margin="296,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159" Grid.Column="1"/>
+                <TextBox x:Name="txtbxPrice" HorizontalAlignment="Left" Height="23" Margin="478,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37" Grid.Column="1" RenderTransformOrigin="0.321,0.217"/>
+            </Grid>
+
+
+        </GroupBox>
+    </Grid>
+</Window>

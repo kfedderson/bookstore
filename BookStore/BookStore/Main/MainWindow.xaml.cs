@@ -154,6 +154,9 @@ namespace BookStore
 
                     LoadInvoice();
 
+                    MyInvoice.UpdateInvoicePrices();
+                    lblTotalNum.Content = MyInvoice.totalCost.ToString();
+
                     dgItems.Items.Refresh();
                     //Is there a selected invoice at this point? if so, refresh it
                     this.Show();

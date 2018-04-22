@@ -242,5 +242,15 @@ namespace BookStore
                 throw ex;
             }
         }
+
+        public void UpdateInvoicePrices()
+        {
+            totalCost = 0.00M;
+
+            foreach (Item i in itemList)
+            {
+                totalCost += i.price;
+            }
+        }
     }
 }

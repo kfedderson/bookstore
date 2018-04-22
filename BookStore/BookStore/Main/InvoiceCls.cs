@@ -146,24 +146,32 @@ namespace BookStore
             //Then Insert all this info. 
             try
             {
+                //If the invoice exists, update the Invoice table, and delete the LineItem stuff
                 if (invNum >= 0)
                 {
+                    //data.ExecuteNonQuery("DELETE * FROM Invoices WHERE InvoiceNumber =" + invNum);
+                    data.ExecuteNonQuery("UPDATE Invoices SET InvoiceDate = '" + date + "', TotalAmount = " +
+                        totalCost + " WHERE InvoiceNumber = " + invNum);
+
                     data.ExecuteNonQuery("DELETE * FROM LineItems WHERE InvoiceNumber =" + invNum);
-                    data.ExecuteNonQuery("DELETE * FROM Invoices WHERE InvoiceNumber =" + invNum);
+                }
+                else
+                {
+                    //else, insert the Invoice info and then find the highest number
+                    data.ExecuteNonQuery("INSERT INTO Invoices(InvoiceDate, TotalAmount) VALUES('" +
+                        date + "', " + totalCost + ")");
+
+                    string highest = data.ExecuteScalarSQL("SELECT TOP 1 InvoiceNumber FROM" +
+                        " Invoices ORDER BY InvoiceNumber DESC");
+
+                    //And set invNum to it
+                    highest = Int32.Parse(highest).ToString();
+                    //Console.WriteLine(highest + " is highest");
+
+                    invNum = Int32.Parse(highest);
                 }
 
-                data.ExecuteNonQuery("INSERT INTO Invoices(InvoiceDate, TotalAmount) VALUES('" +
-                    date + "', " + totalCost + ")");
-
-                string highest = data.ExecuteScalarSQL("SELECT TOP 1 InvoiceNumber FROM" +
-                    " Invoices ORDER BY InvoiceNumber DESC");
-
-                //add one so it's a new ID
-                highest = Int32.Parse(highest).ToString();
-                //Console.WriteLine(highest + " is highest");
-
-                invNum = Int32.Parse(highest);
-
+                //store the LineItem stuff
                 int i = 1;
                 foreach (Item it in itemList)
                 {

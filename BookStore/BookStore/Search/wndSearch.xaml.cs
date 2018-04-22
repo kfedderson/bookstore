@@ -68,13 +68,14 @@ namespace BookStore
             InitializeComponent();
 
             searchLogic = new clsSearchLogic(); //new searchLogic object
+
             //populate datagrid with all database rows
+            dataGrid.Items.Clear();
             dataGrid.ItemsSource = searchLogic.GetAllInvoiceData();
 
             //initial load of filter lists
             PopulateAllComboBoxes();
 
-            WindowState = WindowState.Maximized;
         }
         
 

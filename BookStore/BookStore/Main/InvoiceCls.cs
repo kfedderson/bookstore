@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.Main;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -17,7 +18,11 @@ namespace BookStore
         /// <summary>
         /// The database class object
         /// </summary>
-        clsDataAccess data;
+        //clsDataAccess data;
+        /// <summary>
+        /// Handles the SQL and database stuff.
+        /// </summary>
+        ClsMainSQL SQL;
 
         /// <summary>
         /// The invoice's ID
@@ -50,7 +55,8 @@ namespace BookStore
         /// <param name="inv"></param>
         public InvoiceCls(int inv)
         {
-            data = new clsDataAccess();
+            //data = new clsDataAccess();
+            SQL = new ClsMainSQL();
             allItems = new List<Item>();
             itemList = new List<Item>();
             try
@@ -73,16 +79,9 @@ namespace BookStore
         {
             try
             {
-                int num = 0;
-                DataSet ds = data.ExecuteSQLStatement("SELECT ItemCode," +
-                    " Title, Price FROM Products", ref num);
                 allItems.Clear();
-
-                for (int i = 0; i < num; i++)
-                {
-                    Item temp = new Item(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString(), ds.Tables[0].Rows[i][2].ToString());
-                    allItems.Add(temp);
-                }
+                allItems = SQL.GetAllItems();
+                
             }
             catch (Exception ex)
             {
@@ -106,19 +105,18 @@ namespace BookStore
 
                     //Get the Invoice info. 
                     int num = 0;
-                    DataSet ds = data.ExecuteSQLStatement("SELECT InvoiceDate, TotalAmount FROM Invoices WHERE" +
-                        " InvoiceNumber = " + invNum.ToString(), ref num);
-                    date = DateTime.Parse(ds.Tables[0].Rows[0][0].ToString());
-                    totalCost = Decimal.Parse(ds.Tables[0].Rows[0][1].ToString());
+                    //DataSet ds = data.ExecuteSQLStatement("SELECT InvoiceDate, TotalAmount FROM Invoices WHERE" +
+                        //" InvoiceNumber = " + invNum.ToString(), ref num);
+                    date = SQL.GetDate(invNum);
+                    totalCost = SQL.GetTotalCost(invNum);
 
                     //Get the item info
-                    ds = data.ExecuteSQLStatement("SELECT ItemCode FROM LineItems WHERE InvoiceNumber = " +
-                        invNum, ref num);
+                    SQL.SetUpItemDS(invNum);
 
                     for (int n = 0; n < num; n++)
                     {
-                        string code = ds.Tables[0].Rows[n][0].ToString();
-                        Item temp = new Item(code, data.ExecuteScalarSQL("SELECT Title FROM Products WHERE ItemCode = '" + code + "'").ToString(), data.ExecuteScalarSQL("SELECT Price FROM Products WHERE ItemCode = '" + code + "'").ToString());
+                        string code = SQL.GetItemCode(n);
+                        Item temp = new Item(code, SQL.Name(code), SQL.GetPrice(code));
                         itemList.Add(temp);
                     }
                 }
@@ -149,34 +147,18 @@ namespace BookStore
                 //If the invoice exists, update the Invoice table, and delete the LineItem stuff
                 if (invNum >= 0)
                 {
-                    //data.ExecuteNonQuery("DELETE * FROM Invoices WHERE InvoiceNumber =" + invNum);
-                    data.ExecuteNonQuery("UPDATE Invoices SET InvoiceDate = '" + date + "', TotalAmount = " +
-                        totalCost + " WHERE InvoiceNumber = " + invNum);
-
-                    data.ExecuteNonQuery("DELETE * FROM LineItems WHERE InvoiceNumber =" + invNum);
+                    SQL.SaveExisting(this);
                 }
                 else
                 {
-                    //else, insert the Invoice info and then find the highest number
-                    data.ExecuteNonQuery("INSERT INTO Invoices(InvoiceDate, TotalAmount) VALUES('" +
-                        date + "', " + totalCost + ")");
-
-                    string highest = data.ExecuteScalarSQL("SELECT TOP 1 InvoiceNumber FROM" +
-                        " Invoices ORDER BY InvoiceNumber DESC");
-
-                    //And set invNum to it
-                    highest = Int32.Parse(highest).ToString();
-                    //Console.WriteLine(highest + " is highest");
-
-                    invNum = Int32.Parse(highest);
+                    SQL.CreateNew(ref invNum, this);
                 }
 
                 //store the LineItem stuff
                 int i = 1;
                 foreach (Item it in itemList)
                 {
-                    data.ExecuteNonQuery("INSERT INTO LineItems(InvoiceNumber, LineItemNumber, ItemCode) VALUES(" +
-                        invNum + ", " + i + ", '" + it.itemCode + "')");
+                    SQL.InsertItemLine(invNum, i, it);
                     i++;
                 }
             }
@@ -193,8 +175,7 @@ namespace BookStore
         {
             try
             {
-                data.ExecuteNonQuery("DELETE * FROM LineItems WHERE InvoiceNumber =" + invNum);
-                data.ExecuteNonQuery("DELETE * FROM Invoices WHERE InvoiceNumber =" + invNum);
+                SQL.DeleteInvoice(invNum);
                 invNum = -1;
                 itemList.Clear();
             }

@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="Items\clsItem.cs" />
     <Compile Include="Items\clsItemLogic.cs" />
+    <Compile Include="Main\ClsMainSQL.cs" />
     <Compile Include="Search\clsSearchLogic.cs" />
     <Compile Include="Search\clsSearchSQL.cs" />
     <Compile Include="Search\wndSearch.xaml.cs">

@@ -148,7 +148,8 @@ namespace BookStore
             {
                 if (invNum >= 0)
                 {
-                    DeleteFromDatabase();
+                    data.ExecuteNonQuery("DELETE * FROM LineItems WHERE InvoiceNumber =" + invNum);
+                    data.ExecuteNonQuery("DELETE * FROM Invoices WHERE InvoiceNumber =" + invNum);
                 }
 
                 data.ExecuteNonQuery("INSERT INTO Invoices(InvoiceDate, TotalAmount) VALUES('" +

@@ -38,6 +38,7 @@ namespace BookStore.Items
             InitializeComponent();
             fillDataGrid();
             clear();
+            WindowState = WindowState.Maximized;
         }
 
         #endregion

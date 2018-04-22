@@ -73,6 +73,8 @@ namespace BookStore
 
             //initial load of filter lists
             PopulateAllComboBoxes();
+
+            WindowState = WindowState.Maximized;
         }
         
 

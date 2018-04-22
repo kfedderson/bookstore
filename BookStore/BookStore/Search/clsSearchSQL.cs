@@ -229,10 +229,11 @@ namespace BookStore
         /// <returns>list of invoice objects</returns>
         public List<clsInvoice> GetInvoiceById(string id)
         {
+            int iId;
             try
             {
                 //convert string id to int
-                Int32.TryParse(id, out int iId);
+                Int32.TryParse(id, out iId);
                 
                 //Create a DataSet to hold the data
                 DataSet ds;

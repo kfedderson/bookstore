@@ -105,7 +105,7 @@ namespace BookStore.Items
         /// <param name="itemCode"></param>
         public void deleteItem(string itemCode)
         {
-            DataSet invoices = dataAccess.ExecuteSQLStatement("SELECT * FROM InvoiceItems WHERE itemCode = '" + itemCode + "'", ref invoiceInquiryLength);
+            DataSet invoices = dataAccess.ExecuteSQLStatement("SELECT * FROM LineItems WHERE itemCode = '" + itemCode + "'", ref invoiceInquiryLength);
             if (invoiceInquiryLength == 0)
             {
                 dataAccess.ExecuteScalarSQL("DELETE FROM [" + tableName + "] WHERE itemCode = '" + itemCode + "'");

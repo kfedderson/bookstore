@@ -99,6 +99,7 @@ namespace BookStore
             {
                 try
                 {
+                    winSearch = new wndSearch();
                     this.Hide();
                     winSearch.ShowDialog();
                     //check to see if an invoice was selected. (Negative number means 

@@ -507,5 +507,8 @@ namespace BookStore
                 System.IO.File.AppendAllText(@"C:\Error.txt", Environment.NewLine + "HandleError Exception: " + ex.Message);
             }
         }
+
+
+        //End
     }
 }

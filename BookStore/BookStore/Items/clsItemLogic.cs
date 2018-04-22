@@ -68,7 +68,7 @@ namespace BookStore.Items
                 throw new Exception("Incorrect. Please recheck input values");
             }
             dataAccess.ExecuteScalarSQL("UPDATE [" + tableName + "] SET Title = '" + Title +
-                "', Author = '" + Author + "', Price =" + Price + " WHERE ItemCode = '" + itemCode + "'");
+                "', Author = '" + Author + "', Price = " + Price + " WHERE ItemCode = '" + itemCode + "'");
             getNewData();
         }
 

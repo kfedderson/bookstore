@@ -16,3 +16,6 @@ C:\Users\Fedderson\Google Drive\CS 3280\BookStore\BookStore\BookStore\obj\Debug\
 C:\Users\Fedderson\Google Drive\CS 3280\BookStore\BookStore\BookStore\obj\Debug\BookStore.pdb
 C:\Users\Fedderson\Google Drive\CS 3280\BookStore\BookStore\BookStore\obj\Debug\Main\MainWindow.g.cs
 C:\Users\Fedderson\Google Drive\CS 3280\BookStore\BookStore\BookStore\obj\Debug\Main\MainWindow.baml
+C:\Users\Chris\Documents\GitHub\bookstore\BookStore\BookStore\bin\Debug\BookStore.exe.config
+C:\Users\Chris\Documents\GitHub\bookstore\BookStore\BookStore\obj\Debug\BookStore.exe
+C:\Users\Chris\Documents\GitHub\bookstore\BookStore\BookStore\obj\Debug\BookStore.pdb

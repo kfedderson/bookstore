@@ -22,6 +22,8 @@ namespace BookStore
     public partial class MainWindow : Window
     {
         #region properties
+        //Testing
+
         /// <summary>
         /// Has the info for the invoice. invNum is -1 if
         /// the invoice isn't in the database.
